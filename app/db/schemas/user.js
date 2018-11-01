@@ -5,7 +5,7 @@ var userSchema = mongoose.Schema({
     firstName: { type: String },
     lastName: { type: String },
     contactNumber: { type: String },
-    password: { type: String,required: true, select: false},
+    password: { type: String,required: true },
     status: {type: String,default: 'ACTIVE',trim: true},
     createdAt:{type: Date,default: Date.now()},
     amount:{ type:Number,default: 0 }

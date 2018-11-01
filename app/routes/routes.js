@@ -8,4 +8,5 @@ router
     .post('^/user/userRegistration',reqUserFilter.Register)
     .post('^/user/logIn',reqUserFilter.LogIn)
     .post('^/user/resetPassword',reqUserFilter.ResetPassword)
+    .post('^/user/forgetPassword',reqUserFilter.ForgetPassword)
 module.exports = router;
