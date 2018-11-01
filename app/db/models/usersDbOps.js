@@ -32,9 +32,7 @@ class userModel {
 
     async logInData(user){
         try{
-            var avoid = {
-                "password": 0
-            }
+          
             const result = await UserData.findOne({
                 email:user.email,password: user.password });
             if(!result){
