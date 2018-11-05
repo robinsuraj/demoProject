@@ -59,19 +59,22 @@ var config = require('../../../config/config');
                     res.header({
                         "appToken": token
                     }).send({
-                        result: logInData,
+                        success: true,
+                        data: logInData,
+                        status: 'ACTIVE',
+                        msg : "Login succesefully",
                         token: token,
-                        responseCode: 200,
                     });
                 }
                 else{
-                    resHandler.sendErr({},registerData.msg,{},res) ;
+                    resHandler.sendErr({},logInData.msg,{},res) ;
                 }
             }else{
                 resHandler.sendErr({},'Invalid request',{},res) ;
             }    
         }
         catch(err){
+            console.log(err);
             resHandler.sendErr({},'Something Went Wrong',{},res);
         }
     }
@@ -87,21 +90,33 @@ var config = require('../../../config/config');
                 }
                 let resetData = await userController.resetData(user);
                 if(!resetData.err){
-                    var token_data = {
-                        _id: resetData._id,
-                        status: resetData.status
-                    }
-                    var token = jwt.sign(token_data, config.secreteKey);
-                    res.header({
-                        "appToken": token
-                    }).send({
-                        result: resetData,
-                        token: token,
-                        responseCode: 200,
-                    });
+                    resHandler.sendRes(true, 'Password changed', resetData, {}, res);
                 }
                 else{
-                    resHandler.sendErr({},registerData.msg,{},res) ;
+                    resHandler.sendErr({},resetData.msg,{},res) ;
+                }
+            }else{
+                resHandler.sendErr({},'Invalid request',{},res) ;
+            }    
+        }
+        catch(err){
+            resHandler.sendErr({},'Something Went Wrong',{},res);
+        }
+    }
+
+    async ForgetPassword(req, res){
+        try{ 
+            console.log("req",req.body)
+            if(req.body.email){
+                let user = {
+                    "email": req.body.email,
+                }
+                let forgetPassword = await userController.forgetPassword(user);
+                if(!forgetPassword.err){
+                    resHandler.sendRes(true, 'Password changed', forgetPassword, {}, res);
+                }
+                else{
+                    resHandler.sendErr({},forgetPassword.msg,{},res) ;
                 }
             }else{
                 resHandler.sendErr({},'Invalid request',{},res) ;

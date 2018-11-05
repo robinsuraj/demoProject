@@ -21,6 +21,12 @@ class userController {
         let resp = await userModel.resetData(user) ;
         return resp ;
     }
+
+    async forgetPassword(user){
+        console.log("USer----",user)
+        let resp = await userModel.forgetPassword(user) ;
+        return resp ;
+    }
 }
 
 module.exports = new userController();
